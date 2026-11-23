@@ -1,0 +1,29 @@
+/* More ways we can help: copied 1:1 from the reference (source/css/more-services.css). */
+/* ===== AlsoSection — compact band of secondary services, continuing the services section above.
+   Each card is one link; hover or focus inverts it to the dark card colour.
+   Knobs (scoped to .al): --al-bg ground (matches the services section) · --al-card card fill · --al-dark hover fill
+   --al-ink / --al-muted text · --al-accent coral · --al-radius corners · --al-dur hover speed ===== */
+.al{--al-bg:var(--paper-50,#f6f2ec);--al-card:#fffdf9;--al-dark:var(--charcoal-900,#141312);--al-ink:var(--ink-900,#171513);--al-muted:var(--ink-600,#5a544d);--al-line:rgba(23,21,19,.12);--al-accent:var(--coral-500,#ff6b4f);--al-radius:24px;--al-dur:260ms;--al-ease:cubic-bezier(.2,.7,.1,1);--al-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;--al-body:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;background:var(--al-bg);color:var(--al-ink);font-family:var(--al-body);-webkit-font-smoothing:antialiased}
+.al *,.al *::before,.al *::after{box-sizing:border-box}
+.al :focus-visible{outline:2px solid var(--coral-700,#b9381f);outline-offset:4px}
+.al-wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,4vw,56px) clamp(80px,10vw,152px)}
+.al-inner{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(32px,5vw,80px);padding-top:clamp(40px,5vw,64px);border-top:1px solid var(--al-line)}
+.al-eyebrow{display:flex;align-items:center;gap:var(--mv-label-gap,8px);margin:0 0 18px;color:var(--al-muted);font:600 13px/1.25 var(--al-body);letter-spacing:.16em;text-transform:uppercase}
+.al-eyebrow::before{content:"";width:28px;height:2px;background:var(--al-accent);flex:none}
+.al-h2{margin:0;max-width:12ch;font:700 clamp(32px,3.4vw,48px)/1 var(--al-display);letter-spacing:-.035em}
+.al-lede{margin:16px 0 0;max-width:32ch;color:var(--al-muted);font:400 17px/1.6 var(--al-body)}
+.al-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.al-card,.al-card:hover{display:flex;flex-direction:column;height:100%;min-height:260px;padding:26px;border:1px solid var(--al-line);border-radius:var(--al-radius);background:var(--al-card);color:var(--al-ink);text-decoration:none;transition:background-color var(--al-dur) var(--al-ease),color var(--al-dur),border-color var(--al-dur),transform var(--al-dur) var(--al-ease)}
+.al-card:hover,.al-card:focus-visible{background:var(--al-dark);border-color:var(--al-dark);color:var(--paper-50,#f6f2ec);transform:translateY(-3px)}
+.al-ico{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--al-ink);color:var(--al-bg);transition:background-color var(--al-dur),color var(--al-dur)}
+.al-ico svg{width:22px;height:22px}
+.al-card:hover .al-ico,.al-card:focus-visible .al-ico{background:var(--al-accent);color:var(--al-dark)}
+.al-h3{margin:28px 0 0;font:600 clamp(22px,1.9vw,26px)/1.1 var(--al-display);letter-spacing:-.025em}
+.al-text{margin:10px 0 0;color:var(--al-muted);font:400 16px/1.55 var(--al-body);transition:color var(--al-dur)}
+.al-card:hover .al-text,.al-card:focus-visible .al-text{color:var(--mist-300,#b8b1a7)}
+.al-more{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:24px;font:600 15px/1 var(--al-body)}
+.al-more svg{width:16px;height:16px;transition:transform .25s var(--al-ease)}
+.al-card:hover .al-more svg{transform:translateX(4px)}
+@media (max-width:1099px){.al-inner{grid-template-columns:1fr}}
+@media (max-width:759px){.al-list{grid-template-columns:1fr}.al-card,.al-card:hover{min-height:0}.al{--al-radius:20px}}
+@media (prefers-reduced-motion:reduce){.al{--al-dur:1ms}.al-card:hover,.al-card:focus-visible{transform:none}}

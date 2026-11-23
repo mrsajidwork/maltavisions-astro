@@ -1,0 +1,14 @@
+/* Page not found | MaltaVisions — page styles (from NotFoundPage.dc.html) */
+/* ===== 404 — the logo's M, drawn huge and broken apart ===== */
+.nf-main{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--mv-header-h));display:flex;align-items:center;padding:clamp(48px,6vw,96px) 0}
+.nf-m{position:absolute;z-index:-1;right:-3%;top:50%;width:min(42vw,620px);height:auto;transform:translateY(-50%);color:var(--mv-accent);opacity:.9}
+.nf-m path{fill:none;stroke:currentColor;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.nf-m .nf-off{opacity:.28;transform:translate(9px,-7px) rotate(7deg);transform-origin:52px 22px}
+.nf-code{margin:0;color:var(--mist-300,#b8b1a7);font:600 13px/1.25 var(--mv-body);letter-spacing:.16em;text-transform:uppercase}
+.nf-code b{color:var(--mv-accent);font-weight:600}
+.nf-h1{margin:24px 0 0;max-width:10ch;font:700 clamp(56px,9vw,144px)/.9 var(--mv-display);letter-spacing:-.045em}
+.nf-p{margin:28px 0 0;max-width:40ch;color:var(--mist-300,#b8b1a7);font:400 clamp(18px,1.5vw,21px)/1.55 var(--mv-body)}
+.nf-links{display:flex;flex-wrap:wrap;gap:8px;margin:40px 0 0;padding:0;list-style:none}
+.nf-links li:first-child{width:100%;margin-bottom:6px;color:var(--mist-300,#b8b1a7);font:500 14px/1.4 var(--mv-body)}
+@media (max-width:1199px){.nf-m{opacity:.22;right:-12%;width:70vw}}
+@media (max-width:599px){.nf-m{right:-40%;width:120vw}}

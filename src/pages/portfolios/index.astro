@@ -1,0 +1,173 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { cardClass, getWorkIndexData, pad } from "../../lib/wordpress/work";
+import { projectCounts } from "../../lib/wordpress/portfolios";
+
+export const prerender = false;
+
+const { projects, popData } = await getWorkIndexData();
+const counts = projectCounts(projects);
+
+const goSvg = `<svg viewBox="0 0 18 18" fill="none"><path d="M3 9h11M10 4.5 14.5 9 10 13.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+const arrowSvg = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+---
+
+<MainLayout
+  title="Portfolios – MaltaVisions"
+  bodyClass="mv-page wk"
+  variant="inner"
+  scripts={["site-pages"]}
+>
+  <main id="main">
+    <section class="pg-hero" aria-labelledby="wk-title">
+      <div class="mv-wrap">
+        <div class="wk-head">
+          <div>
+            <p class="pg-eyebrow">Selected work</p>
+            <h1 class="pg-h1" id="wk-title">Work we’re proud to <em>sign.</em></h1>
+            <p class="pg-lede">
+              Client websites, our own products and AI work, all built in WordPress. Some started from a
+              finished design, others from a blank page.
+            </p>
+          </div>
+          <p class="wk-count">
+            <b>{pad(projects.length)}</b><span>projects</span>
+          </p>
+        </div>
+
+        <div class="wk-bar">
+          <div class="wk-tabs" role="tablist" aria-label="Project type">
+            <button
+              class="wk-tab"
+              type="button"
+              role="tab"
+              id="wk-tab-all"
+              data-filter="all"
+              aria-selected="true"
+              aria-controls="wk-panel"
+              tabindex="0"
+            >
+              All<small>{counts.all}</small>
+            </button>
+            <button
+              class="wk-tab"
+              type="button"
+              role="tab"
+              id="wk-tab-plugin"
+              data-filter="plugin"
+              aria-selected="false"
+              aria-controls="wk-panel"
+              tabindex="-1"
+            >
+              Plugin<small>{counts.plugin}</small>
+            </button>
+            <button
+              class="wk-tab"
+              type="button"
+              role="tab"
+              id="wk-tab-website"
+              data-filter="website"
+              aria-selected="false"
+              aria-controls="wk-panel"
+              tabindex="-1"
+            >
+              Website<small>{counts.website}</small>
+            </button>
+          </div>
+        </div>
+
+        <p class="mv-sr" role="status">{projects.length} projects shown</p>
+
+        <ul class="wk-grid" id="wk-panel" role="tabpanel" aria-labelledby="wk-tab-all">
+          {
+            projects.map((project, i) => (
+              <li class={cardClass(i, projects.length)} data-group={project.type}>
+                {/* href keeps deep-link fallback; site-pages.js intercepts click to open popup */}
+                <a href={project.href} data-wk-pop={i}>
+                  <div class="wk-media">
+                    <div class="wk-shot">
+                      {project.imageUrl ? (
+                        <img
+                          src={project.imageUrl}
+                          width="1800"
+                          height="1000"
+                          alt={project.imageAlt}
+                          loading="lazy"
+                          decoding="async"
+                          style="object-position: 50% 0%"
+                        />
+                      ) : (
+                        <div class="wk-ill" role="img" aria-label="Project illustration placeholder" />
+                      )}
+                    </div>
+                    <span class="wk-go" aria-hidden="true" set:html={goSvg} />
+                  </div>
+                  <div class="wk-info">
+                    <span class="wk-num" aria-hidden="true">
+                      {pad(i + 1)}
+                    </span>
+                    <p class="wk-kind">{project.kind}</p>
+                    <h2 class="wk-title">
+                      {project.title}
+                      <span class="mv-sr">: View project</span>
+                    </h2>
+                    {project.role && <p class="wk-role">{project.role}</p>}
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="wk-note">
+          Not every project can be shown publicly. Ask us about work like yours.{" "}
+          <a href="/contact/">Get in touch</a>
+        </p>
+      </div>
+    </section>
+
+    <dialog class="wk-pop" id="wk-pop" aria-labelledby="wk-pop-title">
+      <button class="wk-pop-nav wk-pop-prev" type="button" aria-label="Previous project">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"
+          ><path
+            d="M14 8H3M7 3.5 2.5 8 7 12.5"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path></svg
+        >
+      </button>
+      <button class="wk-pop-nav wk-pop-next" type="button" aria-label="Next project">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"
+          ><path
+            d="M2 8h11M9 3.5 13.5 8 9 12.5"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path></svg
+        >
+      </button>
+      <div class="wk-pop-scroll">
+        <div class="wk-pop-bar">
+          <button class="wk-pop-x" type="button" data-wk-close aria-label="Close">
+            <span class="mv-plus" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="wk-pop-stage">
+          <div class="wk-pop-media" hidden></div>
+          <div class="wk-pop-copy">
+            <p class="wk-pop-kind"></p>
+            <h2 class="wk-pop-title" id="wk-pop-title" aria-live="polite"></h2>
+            <div class="wk-pop-content"></div>
+            <a class="wk-pop-link" hidden target="_blank" rel="noopener noreferrer">
+              Visit the site
+              <Fragment set:html={arrowSvg} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <script type="application/json" id="wk-pop-data" set:html={JSON.stringify(popData)} />
+  </main>
+</MainLayout>

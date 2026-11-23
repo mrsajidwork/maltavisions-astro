@@ -1,0 +1,76 @@
+---
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+import { serverEnv } from "../lib/env";
+import { wpOrigin as getWpOrigin } from "../lib/wordpress/client";
+import "../styles/fonts.css";
+import "../styles/tokens.css";
+import "../styles/shell.css";
+import "../styles/site.css";
+import "../styles/blocks/services.css";
+import "../styles/blocks/services-hero.css";
+import "../styles/blocks/services-pillars.css";
+import "../styles/blocks/ways-to-work.css";
+import "../styles/blocks/more-services.css";
+import "../styles/blocks/process.css";
+import "../styles/blocks/ai-case-study.css";
+import "../styles/blocks/product-spotlight.css";
+import "../styles/blocks/about-hero.css";
+import "../styles/blocks/contact-hero.css";
+import "../styles/blocks/next-steps.css";
+import "../styles/blocks/faq.css";
+import "../styles/blocks/contact.css";
+import "../styles/blocks/work-index.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  bodyClass?: string;
+  variant?: "home" | "inner";
+  scripts?: ("site" | "site-pages" | "contact" | "cf7")[];
+}
+
+const {
+  title = "MaltaVisions",
+  description = "MaltaVisions designs and develops custom WordPress websites, WooCommerce stores and digital products.",
+  bodyClass = "mv-page",
+  variant = "inner",
+  scripts = variant === "home" ? ["site", "contact", "cf7"] : ["site-pages"],
+} = Astro.props;
+
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL || "http://localhost:4321").replace(/\/$/, "");
+const wpOrigin = getWpOrigin();
+const cf7FormId = serverEnv("CF7_FORM_ID") || "66";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
+    <link rel="icon" type="image/svg+xml" href="/logo/maltavisions-icon-coral.svg" />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <Header currentPath={Astro.url.pathname} />
+    <slot />
+    <Footer />
+    {scripts.includes("site") && <script src="/site.js" defer></script>}
+    {scripts.includes("site-pages") && <script src="/site-pages.js" defer></script>}
+    {scripts.includes("contact") && <script src="/contact-view.js" defer></script>}
+    {
+      scripts.includes("cf7") && (
+        <>
+          <script is:inline define:vars={{ wpOrigin, cf7FormId }}>
+            window.__MV_CF7__ = { origin: wpOrigin, formId: Number(cf7FormId) };
+          </script>
+          <script src="/cf7-bridge.js" defer></script>
+        </>
+      )
+    }
+  </body>
+</html>

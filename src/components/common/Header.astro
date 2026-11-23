@@ -1,0 +1,96 @@
+---
+import Logo from "./Logo.astro";
+
+interface NavItem {
+  title: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Props {
+  ctaLabel?: string;
+  ctaHref?: string;
+  email?: string;
+  menuNote?: string;
+  currentPath?: string;
+}
+
+const {
+  ctaLabel = "Start a project",
+  ctaHref = "/contact/",
+  email = "hello@maltavisions.com",
+  menuNote = "We reply within one working day.",
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+
+const nav: NavItem[] = [
+  { title: "Work", href: "/portfolios/" },
+  { title: "Services", href: "/our-services/" },
+  { title: "Products", href: "https://easysocialfeed.com/", external: true },
+  { title: "About", href: "/about/" },
+  { title: "Contact", href: "/contact/" },
+];
+
+const pad = (n: number) => String(n).padStart(2, "0");
+const isCurrent = (href: string) => {
+  if (href.startsWith("http")) return false;
+  if (href === "/") return currentPath === "/";
+  return currentPath === href || currentPath.startsWith(href);
+};
+
+const arrow = `<svg class="mv-i" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<a class="mv-skip" href="#main">Skip to content</a>
+
+<header class="mv-header" id="top">
+  <div class="mv-wrap mv-bar">
+    <Logo word="#f6f2ec" height="var(--mv-logo-h)" />
+    <div class="mv-head-actions">
+      <a class="mv-pill mv-cta-top" href={ctaHref}>{ctaLabel}</a>
+      <button class="mv-menu-btn" type="button" aria-expanded="false" aria-controls="mv-menu">
+        Menu<span class="mv-plus" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mv-menu" id="mv-menu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+  <div class="mv-menu-top">
+    <div class="mv-wrap mv-bar">
+      <Logo word="#f6f2ec" height="var(--mv-logo-h)" />
+      <button class="mv-close" type="button">Close<span class="mv-plus" aria-hidden="true"></span></button>
+    </div>
+  </div>
+  <div class="mv-wrap mv-menu-body">
+    <nav aria-label="Site">
+      <ul class="mv-menu-links">
+        {
+          nav.map((item, i) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : "false"}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+              >
+                <span class="mv-menu-num" aria-hidden="true">
+                  {pad(i + 1)}
+                </span>
+                <span class="mv-menu-label">{item.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="mv-menu-foot">
+      <a class="mv-btn mv-btn--primary mv-menu-cta" href={ctaHref}>
+        {ctaLabel}
+        <Fragment set:html={arrow} />
+      </a>
+      <a class="mv-menu-mail" href={`mailto:${email}`}>{email}</a>
+      <p class="mv-menu-note">{menuNote}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+---
+/**
+ * Native Astro stand-in for CF7 "Book a call" form.
+ * Markup mirrors theme/maltavisions/cf7/book-a-call-form.txt so contact.css applies.
+ * Submits via /cf7-bridge.js → CF7 REST feedback.
+ */
+
+const services = [
+  "A website",
+  "An online store",
+  "A custom plugin",
+  "An AI feature",
+  "Something else",
+];
+---
+
+<div class="wpcf7">
+  <form class="wpcf7-form init ct-form" action="#" method="post" novalidate>
+    <fieldset class="ct-fieldset">
+      <legend class="ct-legend">What would you like to build?</legend>
+      <div class="ct-chips" role="group" aria-label="What would you like to build?">
+        {
+          services.map((label) => (
+            <label class="ct-chip">
+              <input type="checkbox" name="service[]" value={label} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="ct-row">
+      <div>
+        <label class="ct-label" for="ct-name">Your name</label>
+        <input
+          class="ct-input"
+          type="text"
+          name="your-name"
+          id="ct-name"
+          placeholder="Jane Smith"
+          required
+          autocomplete="name"
+        />
+      </div>
+      <div>
+        <label class="ct-label" for="ct-email">Email</label>
+        <input
+          class="ct-input"
+          type="email"
+          name="your-email"
+          id="ct-email"
+          placeholder="jane@company.com"
+          required
+          autocomplete="email"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label class="ct-label" for="ct-site">
+        Website <span class="ct-opt">(optional)</span>
+      </label>
+      <input class="ct-input" type="text" name="website" id="ct-site" placeholder="company.com" />
+    </div>
+
+    <div>
+      <label class="ct-label" for="ct-msg">About your project</label>
+      <textarea
+        class="ct-area"
+        name="message"
+        id="ct-msg"
+        rows="2"
+        placeholder="A few lines about what you need and when."
+        required></textarea>
+    </div>
+
+    <div class="ct-submit">
+      <p class="ct-note">We will reply by email to arrange a call.</p>
+      <button class="ct-btn" type="submit">
+        Book a call
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path
+            d="M2 8h11M9 3.5 13.5 8 9 12.5"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="wpcf7-response-output" aria-hidden="true" data-cf7-status></div>
+  </form>
+</div>

@@ -1,0 +1,42 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getPortfolioBySlug } from "../../lib/wordpress/portfolios";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const project = slug ? await getPortfolioBySlug(slug) : null;
+if (!project) {
+  return Astro.redirect("/portfolios/");
+}
+---
+
+<MainLayout
+  title={`${project.title} – MaltaVisions`}
+  bodyClass="mv-page single-portfolio"
+  variant="inner"
+  scripts={["site-pages"]}
+>
+  <main id="main">
+    <article class="mv-wrap" style="padding-block: var(--space-8); max-width: 920px;">
+      <p class="pg-eyebrow">{project.kind}</p>
+      <h1 class="pg-h1" style="margin-bottom: var(--space-5);">{project.title}</h1>
+      {
+        project.imageUrl && (
+          <img
+            src={project.imageUrl}
+            alt={project.imageAlt}
+            width="1600"
+            height="900"
+            decoding="async"
+            style="width:100%;height:auto;border-radius:8px;margin-bottom:var(--space-6);"
+          />
+        )
+      }
+      <div class="entry-content" set:html={project.contentHtml} />
+      <p style="margin-top: var(--space-7);">
+        <a class="mv-btn mv-btn--line" href="/portfolios/">← Back to work</a>
+      </p>
+    </article>
+  </main>
+</MainLayout>

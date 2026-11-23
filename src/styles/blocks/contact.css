@@ -1,0 +1,78 @@
+/* Contact: copied 1:1 from the reference (source/css/contact.css). */
+/* ===== ContactSection — coral closing band with a short "book a call" form.
+   Prototype: the form validates and shows a thank-you state, but sends nothing.
+   Knobs (scoped to .ct): --ct-bg coral band · --ct-ink text on coral · --ct-card form card · --ct-field field fill
+   --ct-line field border · --ct-focus focus ring · --ct-radius card corners · --ct-h2 heading size ===== */
+.ct{--ct-bg:var(--coral-500,#ff6b4f);--ct-ink:var(--ink-900,#171513);--ct-card:var(--paper-50,#f6f2ec);--ct-field:#fffdf9;--ct-muted:var(--ink-600,#5a544d);--ct-line:rgba(23,21,19,.18);--ct-focus:var(--ink-900,#171513);--ct-radius:28px;--ct-h2:clamp(44px,6.4vw,104px);--ct-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;--ct-body:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;position:relative;isolation:isolate;overflow:hidden;background:var(--ct-bg);color:var(--ct-ink);font-family:var(--ct-body);-webkit-font-smoothing:antialiased}
+.ct::before{content:"";position:absolute;z-index:-1;right:-10%;top:-30%;width:60vw;max-width:900px;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.28),rgba(255,255,255,0))}
+.ct *,.ct *::before,.ct *::after{box-sizing:border-box}
+.ct :focus-visible{outline:2px solid var(--ct-focus);outline-offset:3px;border-radius:6px}
+.ct-wrap{max-width:1440px;margin:0 auto;padding:clamp(80px,10vw,144px) clamp(16px,4vw,56px);display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(40px,6vw,104px);align-items:center}
+.ct-eyebrow{display:flex;align-items:center;gap:var(--mv-label-gap,8px);margin:0 0 22px;font:600 13px/1.25 var(--ct-body);letter-spacing:.16em;text-transform:uppercase}
+.ct-eyebrow::before{content:"";width:28px;height:2px;background:var(--ct-ink);flex:none}
+.ct-h2{margin:0;font:700 var(--ct-h2)/.92 var(--ct-display);letter-spacing:-.045em}
+.ct-lede{margin:24px 0 0;max-width:34ch;font:400 clamp(18px,1.5vw,21px)/1.55 var(--ct-body)}
+.ct-alt{margin:28px 0 0;font:400 16px/1.5 var(--ct-body)}
+.ct-alt a,.ct-alt a:hover{color:var(--ct-ink);font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+/* form card */
+.ct-card{padding:clamp(24px,3vw,40px);border-radius:var(--ct-radius);background:var(--ct-card);box-shadow:0 40px 80px -40px rgba(80,20,5,.45)}
+.ct-form{display:grid;gap:18px}
+.ct-fieldset{margin:0;padding:0;border:0;min-width:0}
+.ct-legend,.ct-label{display:block;margin:0 0 10px;padding:0;color:var(--ct-ink);font:600 15px/1.3 var(--ct-body)}
+.ct-opt{font:400 14px/1 var(--ct-body);color:var(--ct-muted)}
+.ct-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ct-chip{position:relative;display:inline-flex}
+.ct-chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.ct-chip span{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1.5px solid var(--ct-line);border-radius:999px;background:var(--ct-field);font:500 15px/1 var(--ct-body);transition:background-color .2s,border-color .2s,color .2s}
+.ct-chip span::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;transition:background-color .2s,border-color .2s}
+.ct-chip input:hover+span{border-color:var(--ct-ink)}
+.ct-chip input:checked+span{background:var(--ct-ink);border-color:var(--ct-ink);color:var(--ct-card)}
+.ct-chip input:checked+span::before{background:var(--coral-500,#ff6b4f);border-color:var(--coral-500,#ff6b4f)}
+.ct-chip input:focus-visible+span{outline:2px solid var(--ct-focus);outline-offset:3px}
+.ct-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ct-input,.ct-area{display:block;width:100%;min-height:52px;padding:14px 16px;border:1.5px solid var(--ct-line);border-radius:14px;background:var(--ct-field);color:var(--ct-ink);font:400 16px/1.4 var(--ct-body);transition:border-color .2s}
+.ct-area{min-height:120px;resize:vertical}
+.ct-input:hover,.ct-area:hover{border-color:rgba(23,21,19,.4)}
+.ct-input:focus,.ct-area:focus{outline:none;border-color:var(--ct-ink);box-shadow:0 0 0 3px rgba(23,21,19,.12)}
+.ct-input::placeholder,.ct-area::placeholder{color:#8a837b}
+.ct-submit{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-top:4px}
+.ct-note{margin:0;max-width:30ch;color:var(--ct-muted);font:400 14px/1.45 var(--ct-body)}
+.ct-btn{display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 28px;border:0;border-radius:999px;background:var(--ct-ink);color:var(--ct-card);font:600 16px/1 var(--ct-body);cursor:pointer;transition:background-color .2s}
+.ct-btn:hover{background:#2c2925}
+.ct-btn svg{width:16px;height:16px;transition:transform .25s ease}
+.ct-btn:hover svg{transform:translateX(3px)}
+/* thank-you state */
+.ct-done{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-height:420px;justify-content:center}
+.ct-tick{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--ct-ink);color:var(--coral-500,#ff6b4f)}
+.ct-tick svg{width:26px;height:26px}
+.ct-done h3{margin:8px 0 0;font:700 clamp(28px,3vw,40px)/1.05 var(--ct-display);letter-spacing:-.03em}
+.ct-done p{margin:0;max-width:38ch;color:var(--ct-muted);font:400 17px/1.55 var(--ct-body)}
+.ct-reset{margin-top:8px;padding:0;border:0;background:none;color:var(--ct-ink);font:600 15px/1 var(--ct-body);text-decoration:underline;text-underline-offset:4px;cursor:pointer;min-height:44px}
+@media (max-width:999px){.ct-wrap{grid-template-columns:1fr}}
+@media (max-width:599px){.ct{--ct-radius:22px}.ct-row{grid-template-columns:1fr}.ct-btn{width:100%;justify-content:center}}
+
+/* ===== Contact Form 7 adapter =====
+   CF7's own stylesheet is switched off (functions.php), so the form looks exactly like the reference.
+   These rules map CF7's generated markup onto the reference classes above. */
+.ct .wpcf7{margin:0}
+.ct .wpcf7 .hidden-fields-container{display:none}
+.ct .wpcf7 .screen-reader-response{position:absolute;overflow:hidden;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);width:1px;height:1px;margin:-1px;padding:0;border:0;word-wrap:normal !important}
+.ct .wpcf7-form-control-wrap{position:relative;display:block}
+/* single-choice chips ([checkbox ... exclusive], optional): CF7 outputs .wpcf7-list-item > label > input + .wpcf7-list-item-label */
+.ct .ct-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ct .ct-chips .wpcf7-list-item{position:relative;display:inline-flex;margin:0}
+.ct .ct-chips .wpcf7-list-item label{position:relative;display:inline-flex}
+.ct .ct-chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.ct .ct-chips .wpcf7-list-item-label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1.5px solid var(--ct-line);border-radius:999px;background:var(--ct-field);font:500 15px/1 var(--ct-body);transition:background-color .2s,border-color .2s,color .2s}
+.ct .ct-chips .wpcf7-list-item-label::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;transition:background-color .2s,border-color .2s}
+.ct .ct-chips input:hover+.wpcf7-list-item-label{border-color:var(--ct-ink)}
+.ct .ct-chips input:checked+.wpcf7-list-item-label{background:var(--ct-ink);border-color:var(--ct-ink);color:var(--ct-card)}
+.ct .ct-chips input:checked+.wpcf7-list-item-label::before{background:var(--coral-500,#ff6b4f);border-color:var(--coral-500,#ff6b4f)}
+.ct .ct-chips input:focus-visible+.wpcf7-list-item-label{outline:2px solid var(--ct-focus);outline-offset:3px}
+/* validation and response messages */
+.ct .wpcf7-not-valid{border-color:var(--coral-700,#b9381f)}
+.ct .wpcf7-not-valid-tip{display:block;margin-top:6px;color:var(--coral-700,#b9381f);font:500 14px/1.35 var(--ct-body)}
+.ct .wpcf7-response-output{margin:0;padding:12px 16px;border:1.5px solid var(--coral-700,#b9381f);border-radius:14px;color:var(--ct-ink);font:500 15px/1.45 var(--ct-body)}
+.ct .wpcf7 form.init .wpcf7-response-output,.ct .wpcf7 form.sent .wpcf7-response-output,.ct .wpcf7 form.resetting .wpcf7-response-output,.ct .wpcf7 form.submitting .wpcf7-response-output{display:none}
+.ct .wpcf7-spinner{display:none}
+.ct .wpcf7 form.submitting .ct-btn{opacity:.6;pointer-events:none}

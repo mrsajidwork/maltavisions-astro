@@ -1,0 +1,31 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ContactForm from "../../components/contact/ContactForm.astro";
+import { getPageHtmlBySlug } from "../../lib/wordpress/pages";
+import { stripTags } from "../../lib/html";
+
+export const prerender = false;
+
+const result = await getPageHtmlBySlug("contact");
+if (!result) {
+  throw new Error("Contact page not found in WordPress REST API");
+}
+
+const PLACEHOLDER =
+  '<p class="ct-note">Contact Form 7 form #66 renders here on the front end.</p>';
+const [beforeForm, afterForm = ""] = result.html.split(PLACEHOLDER);
+const title = `${stripTags(result.page.title?.rendered || "Contact")} – MaltaVisions`;
+---
+
+<MainLayout
+  title={title}
+  bodyClass="mv-page cp"
+  variant="inner"
+  scripts={["site-pages", "contact", "cf7"]}
+>
+  <main id="main">
+    <Fragment set:html={beforeForm} />
+    {result.html.includes(PLACEHOLDER) && <ContactForm />}
+    <Fragment set:html={afterForm} />
+  </main>
+</MainLayout>

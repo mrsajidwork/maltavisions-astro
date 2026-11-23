@@ -1,16 +1,26 @@
 ---
+import MainLayout from "../layouts/MainLayout.astro";
+import ContactForm from "../components/contact/ContactForm.astro";
+import { getPageHtmlBySlug } from "../lib/wordpress/pages";
+
+export const prerender = false;
+
+const result = await getPageHtmlBySlug("home");
+if (!result) {
+  throw new Error("Home page not found in WordPress REST API");
+}
+
+// REST renders the CF7 block in preview mode (placeholder). Split so we inject a real form.
+const PLACEHOLDER =
+  '<p class="ct-note">Contact Form 7 form #66 renders here on the front end.</p>';
+const [beforeForm, afterForm = ""] = result.html.split(PLACEHOLDER);
+const title = "MaltaVisions";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title={title} variant="home" bodyClass="home mv-page" scripts={["site", "contact", "cf7"]}>
+  <main id="main">
+    <Fragment set:html={beforeForm} />
+    {result.html.includes(PLACEHOLDER) && <ContactForm />}
+    <Fragment set:html={afterForm} />
+  </main>
+</MainLayout>

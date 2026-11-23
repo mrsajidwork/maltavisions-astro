@@ -1,0 +1,90 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  lead?: string;
+  email?: string;
+  blurb?: string;
+}
+
+const {
+  lead = "Have something in mind?",
+  email = "hello@maltavisions.com",
+  blurb = "MaltaVisions designs and develops WordPress websites, WooCommerce stores and digital products.",
+} = Astro.props;
+
+const year = new Date().getFullYear();
+const navigate = [
+  { title: "Work", url: "/portfolios/" },
+  { title: "Services", url: "/our-services/" },
+  { title: "Products", url: "https://easysocialfeed.com/" },
+  { title: "About", url: "/about/" },
+  { title: "Contact", url: "/contact/" },
+];
+const legal = [
+  { title: "Privacy policy", url: "/privacy-policy/" },
+  { title: "Terms of service", url: "/privacy-policy/" },
+];
+
+const up = `<svg class="mv-i" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V4M4 7.5 8 3.5 12 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<footer class="mv-footer sf">
+  <div class="mv-wrap sf-wrap">
+    <div class="mv-footer-top sf-top">
+      <h2 class="mv-lead sf-lead">{lead}</h2>
+      <a class="mv-mail sf-mail" href={`mailto:${email}`}>{email}</a>
+    </div>
+    <div class="mv-fgrid">
+      <div class="mv-fbrand">
+        <Logo word="#171513" height="34px" />
+        <p class="mv-desc">{blurb}</p>
+      </div>
+      <nav class="mv-fgroup" aria-labelledby="mv-fg-nav">
+        <h2 id="mv-fg-nav">Navigate</h2>
+        <ul>
+          {
+            navigate.map((item) => (
+              <li>
+                <a href={item.url}>{item.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <nav class="mv-fgroup" aria-labelledby="mv-fg-legal">
+        <h2 id="mv-fg-legal">Legal</h2>
+        <ul>
+          {
+            legal.map((item) => (
+              <li>
+                <a href={item.url}>{item.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <a
+        class="mv-green"
+        href="https://www.thegreenwebfoundation.org/green-web-check/?url=maltavisions.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          decoding="async"
+          src="https://app.greenweb.org/api/v3/greencheckimage/maltavisions.com?nocache=true"
+          alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+          width="200"
+          height="95"
+        />
+      </a>
+    </div>
+    <div class="mv-fbottom">
+      <p style="margin: 0">© {year} MaltaVisions</p>
+      <a href="#top">
+        Back to top
+        <Fragment set:html={up} />
+      </a>
+    </div>
+  </div>
+</footer>

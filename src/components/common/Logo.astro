@@ -1,0 +1,26 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+interface Props {
+  word?: string;
+  height?: string;
+  href?: string;
+  label?: string;
+}
+
+const {
+  word = "#f6f2ec",
+  height = "var(--mv-logo-h)",
+  href = "/",
+  label = "MaltaVisions home",
+} = Astro.props;
+
+const file = path.join(process.cwd(), "public/logo/logo-inline.svg");
+const svg = fs
+  .readFileSync(file, "utf8")
+  .replaceAll("{{word}}", word)
+  .replaceAll("{{h}}", height);
+---
+
+<a class="mv-logo" href={href} aria-label={label} set:html={svg} />
